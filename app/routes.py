@@ -1,5 +1,6 @@
+from flask import render_template
 from app import app
 
 @app.route("/")
 def home():
-    return "Linux Patch & Compliance Dashboard"
+    return render_template("index.html")
