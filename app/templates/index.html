@@ -7,6 +7,14 @@
 </head>
 <body>
     <h1>Linux Patch & Compliance Dashboard</h1>
-    <p>Server Status Dashboard</p>
+
+    <h2>System Information</h2>
+
+    <ul>
+        <li><strong>Hostname:</strong> {{ system_info.hostname }}</li>
+        <li><strong>OS:</strong> {{ system_info.os_info }}</li>
+        <li><strong>Kernel:</strong> {{ system_info.kernel }}</li>
+        <li><strong>Uptime:</strong> {{ system_info.uptime }}</li>
+    </ul>
 </body>
 </html>
