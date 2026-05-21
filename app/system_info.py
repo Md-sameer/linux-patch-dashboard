@@ -11,6 +11,25 @@ def get_os_pretty_name():
 
     return "Unknown OS"
 
+def get_pending_updates():
+    try:
+        output = subprocess.check_output(
+            "apt list --upgradable 2>/dev/null",
+            shell=True
+        ).decode().splitlines()
+
+        updates = output[1:]
+
+        return {
+            "count": len(updates),
+            "packages": updates
+        }
+
+    except Exception:
+        return {
+            "count": 0,
+            "packages": []
+        }
 
 def get_system_info():
     hostname = socket.gethostname()
@@ -22,9 +41,12 @@ def get_system_info():
         shell=True
     ).decode().strip()
 
+    updates = get_pending_updates()
+
     return {
         "hostname": hostname,
         "os_info": os_info,
         "kernel": kernel,
-        "uptime": uptime
+        "uptime": uptime,
+        "updates": updates
     }
