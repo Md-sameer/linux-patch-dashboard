@@ -58,3 +58,30 @@ def insert_telemetry(data):
 
     conn.commit()
     conn.close()
+
+def get_telemetry_history():
+
+    conn = sqlite3.connect(DATABASE)
+
+    conn.row_factory = sqlite3.Row
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            hostname,
+            ip,
+            os,
+            uptime,
+            updates,
+            status,
+            last_check
+        FROM telemetry
+        ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    return rows

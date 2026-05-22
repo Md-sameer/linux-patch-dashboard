@@ -11,127 +11,168 @@
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+    <meta http-equiv="refresh" content="30">
+
 </head>
 
 <body>
 
-    <h1>Linux Patch & Compliance Dashboard</h1>
+    <div class="navbar">
 
-    <div class="card">
+	    <div class="nav-title">
+        	Linux Patch & Compliance Dashboard
+    	    </div>
 
-        <h2>System Information</h2>
+    	    <div class="nav-right">
 
-        <ul>
-            <li>
-                <strong>Hostname:</strong>
-                {{ system_info.hostname }}
-            </li>
+        	<div class="last-updated">
+            		Last Updated: {{ last_updated }}
+        	</div>
 
-            <li>
-                <strong>OS:</strong>
-                {{ system_info.os_info }}
-            </li>
+             	<div class="nav-links">
 
-            <li>
-                <strong>Kernel:</strong>
-                {{ system_info.kernel }}
-            </li>
+            		<a href="/">Dashboard</a>
 
-            <li>
-                <strong>Uptime:</strong>
-                {{ system_info.uptime }}
-            </li>
-        </ul>
+            		<a href="/history">History</a>
+
+        	</div>
+
+	    </div>
 
     </div>
 
-    <div class="card">
 
-        <h2>Patch Status</h2>
+    <div class="container">
 
-        <p>
-            <strong>Pending Updates:</strong>
-            {{ system_info.updates.count }}
-        </p>
+        <div class="metrics">
 
-        {% if system_info.updates.count > 0 %}
+            <div class="metric-card">
+                <h3>Total Nodes</h3>
+                <p>{{ total_nodes }}</p>
+            </div>
 
-            <p class="status-warning">
-                Updates Available
-            </p>
+            <div class="metric-card">
+                <h3>Online Nodes</h3>
+                <p>{{ online_nodes }}</p>
+            </div>
+
+            <div class="metric-card">
+                <h3>Total Pending Updates</h3>
+                <p>{{ total_updates }}</p>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Dashboard Server</h2>
 
             <ul>
-                {% for package in system_info.updates.packages %}
+                <li>
+                    <strong>Hostname:</strong>
+                    {{ system_info.hostname }}
+                </li>
 
-                    <li>{{ package }}</li>
+                <li>
+                    <strong>OS:</strong>
+                    {{ system_info.os_info }}
+                </li>
 
-                {% endfor %}
+                <li>
+                    <strong>Kernel:</strong>
+                    {{ system_info.kernel }}
+                </li>
+
+                <li>
+                    <strong>Uptime:</strong>
+                    {{ system_info.uptime }}
+                </li>
             </ul>
 
-        {% else %}
+        </div>
 
-            <p class="status-ok">
-                System Fully Updated
+        <div class="card">
+
+            <h2>Dashboard Patch Status</h2>
+
+            <p>
+                <strong>Pending Updates:</strong>
+                {{ system_info.updates.count }}
             </p>
 
-        {% endif %}
+            {% if system_info.updates.count > 0 %}
 
-    </div>
+                <p class="status-warning">
+                    Updates Available
+                </p>
 
-    <div class="card">
+            {% else %}
 
-        <h2>Managed Nodes</h2>
+                <p class="status-ok">
+                    System Fully Updated
+                </p>
 
-        <table border="1" cellpadding="10">
+            {% endif %}
 
-            <tr>
-                <th>Hostname</th>
-                <th>IP</th>
-                <th>OS</th>
-                <th>Uptime</th>
-                <th>Pending Updates</th>
-                <th>Status</th>
-		<th>Last Check</th>
-            </tr>
+        </div>
 
-            {% for server in remote_servers %}
+        <div class="card">
 
-            <tr>
+            <h2>Managed Nodes</h2>
 
-                <td>{{ server.hostname }}</td>
+            <table>
 
-                <td>{{ server.ip }}</td>
+                <tr>
+                    <th>Hostname</th>
+                    <th>IP</th>
+                    <th>OS</th>
+                    <th>Uptime</th>
+                    <th>Updates</th>
+                    <th>Status</th>
+                    <th>Last Check</th>
+                </tr>
 
-                <td>{{ server.os }}</td>
+                {% for server in remote_servers %}
 
-                <td>{{ server.uptime }}</td>
+                <tr>
 
-                <td>{{ server.updates }}</td>
+                    <td>{{ server.hostname }}</td>
 
-                <td>
+                    <td>{{ server.ip }}</td>
 
-                    {% if server.status == "Online" %}
+                    <td>{{ server.os }}</td>
 
-                        <span class="status-ok">
-                            {{ server.status }}
-                        </span>
+                    <td>{{ server.uptime }}</td>
 
-                    {% else %}
+                    <td>{{ server.updates }}</td>
 
-                        <span class="status-warning">
-                            {{ server.status }}
-                        </span>
+                    <td>
 
-                    {% endif %}
+                        {% if server.status == "Online" %}
 
-                </td>
-		<td>{{ server.last_check }}</td>
+                            <span class="status-online">
+                                {{ server.status }}
+                            </span>
 
-            </tr>
+                        {% else %}
 
-            {% endfor %}
+                            <span class="status-offline">
+                                {{ server.status }}
+                            </span>
 
-        </table>
+                        {% endif %}
+
+                    </td>
+
+                    <td>{{ server.last_check }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
 
     </div>
 

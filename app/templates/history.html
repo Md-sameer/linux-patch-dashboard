@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Telemetry History</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+    
+    <meta http-equiv="refresh" content="30">
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+    	<div class="nav-title">
+        	Telemetry History
+    	</div>
+
+    	<div class="nav-links">
+
+        	<a href="/">Dashboard</a>
+
+        	<a href="/history">History</a>
+
+    	</div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>Historical Telemetry</h2>
+
+            <table>
+
+                <tr>
+                    <th>Hostname</th>
+                    <th>IP</th>
+                    <th>OS</th>
+                    <th>Uptime</th>
+                    <th>Updates</th>
+                    <th>Status</th>
+                    <th>Last Check</th>
+                </tr>
+
+                {% for row in telemetry_history %}
+
+                <tr>
+
+                    <td>{{ row.hostname }}</td>
+
+                    <td>{{ row.ip }}</td>
+
+                    <td>{{ row.os }}</td>
+
+                    <td>{{ row.uptime }}</td>
+
+                    <td>{{ row.updates }}</td>
+
+                    <td>
+			    {% if row.status == "Online" %}
+			    	
+			    	<span class="status-online">
+					{{ row.status }}
+				</span>
+
+			    {% else %}
+
+			    	<span class="status-offline">
+					{{ row.status }}
+				</span>
+
+			     {% endif %}
+		    </td>
+
+                    <td>{{ row.last_check }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
