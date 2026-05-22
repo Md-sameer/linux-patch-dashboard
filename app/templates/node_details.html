@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Node Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <div class="nav-title">
+            Node Details
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">Dashboard</a>
+
+            <a href="/history">History</a>
+
+            <a href="/online">Online</a>
+
+            <a href="/offline">Offline</a>
+
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>{{ server.hostname }}</h2>
+
+            <table>
+
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+
+                <tr>
+                    <td>Hostname</td>
+                    <td>{{ server.hostname }}</td>
+                </tr>
+
+                <tr>
+                    <td>IP Address</td>
+                    <td>{{ server.ip }}</td>
+                </tr>
+
+                <tr>
+                    <td>Operating System</td>
+                    <td>{{ server.os }}</td>
+                </tr>
+
+                <tr>
+                    <td>Uptime</td>
+                    <td>{{ server.uptime }}</td>
+                </tr>
+
+                <tr>
+                    <td>Pending Updates</td>
+                    <td>{{ server.updates }}</td>
+                </tr>
+
+                <tr>
+                    <td>Status</td>
+
+                    <td>
+
+                        {% if server.status == "Online" %}
+
+                            <span class="status-online">
+                                {{ server.status }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-offline">
+                                {{ server.status }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>Last Check</td>
+                    <td>{{ server.last_check }}</td>
+		</tr>
+
+		<tr>
+    		    <td>Patch Status</td>
+
+    		    <td>
+
+        		{% if server.updates == 0 %}
+
+            			<span class="status-online">
+                			✓ System Fully Patched
+            			</span>
+
+        		{% else %}
+
+            			<span class="status-offline">
+                			{{ server.updates }} Pending Updates
+            			</span>
+
+        		{% endif %}
+
+    		     </td>
+
+		</tr>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+	<div class="card">
+
+    		<h2>Patch Details</h2>
+
+    		{% if server.updates == 0 %}
+
+        		<div class="healthy-message">
+
+            			✓ No pending updates detected.
+            			System is fully patched.
+
+        		</div>
+
+    		{% else %}
+
+        		<table>
+
+            			<tr>
+                			<th>Pending Package Updates</th>
+            			</tr>
+
+            			{% for package in server.update_packages %}
+
+           			 <tr>
+
+               				 <td>{{ package }}</td>
+
+           			 </tr>
+
+            			{% endfor %}
+
+        		</table>
+
+    		{% endif %}
+
+	</div>
+
+    </div>
+
+</body>
+
+</html>

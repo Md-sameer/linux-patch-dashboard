@@ -39,10 +39,17 @@ def get_remote_system_info(server):
             "uptime -p"
         )
 
-        updates = run_remote_command(
+        updates_list = run_remote_command(
             ip,
-            "apt list --upgradable 2>/dev/null | tail -n +2 | wc -l"
+            "apt list --upgradable 2>/dev/null | tail -n +2"
         )
+
+        update_packages = (
+                updates_list.splitlines()
+                if updates_list else []
+        )
+
+        updates = len(update_packages)
 
         return {
             "hostname": hostname,
@@ -50,6 +57,7 @@ def get_remote_system_info(server):
             "os": os_info,
             "uptime": uptime,
             "updates": updates,
+            "update_packages": update_packages,
             "status": "Online",
             "last_check": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
@@ -62,6 +70,7 @@ def get_remote_system_info(server):
             "os": "Unknown",
             "uptime": "Unknown",
             "updates": "Unknown",
+            "update_packages": [],
             "status": "Offline",
             "last_check": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }

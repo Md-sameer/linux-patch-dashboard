@@ -50,16 +50,24 @@
                 <h3>Total Nodes</h3>
                 <p>{{ total_nodes }}</p>
             </div>
+	
+	    <a href="/online" class="metric-link">
 
-            <div class="metric-card">
-                <h3>Online Nodes</h3>
-                <p>{{ online_nodes }}</p>
-            </div>
+            	<div class="metric-card">
+                	<h3>Online Nodes</h3>
+                	<p>{{ online_nodes }}</p>
+            	</div>
 
-            <div class="metric-card">
-                <h3>Total Pending Updates</h3>
-                <p>{{ total_updates }}</p>
-            </div>
+	    </a>
+
+	   <a href="/offline" class="metric-link">
+
+            	<div class="metric-card">
+                	<h3>Offline Nodes</h3>
+               		<p>{{ offline_nodes }}</p>
+            	</div>
+
+	   </a>
 
         </div>
 
@@ -136,7 +144,14 @@
 
                 <tr>
 
-                    <td>{{ server.hostname }}</td>
+                    <td>
+   	 		<a href="/node/{{ server.hostname }}"
+       			   class="node-link">
+
+        	 	    {{ server.hostname }}
+
+    			</a>
+		    </td>
 
                     <td>{{ server.ip }}</td>
 

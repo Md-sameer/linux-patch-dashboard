@@ -53,6 +53,27 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: 0.2s;
+}
+
+.metric-card:hover .metric-card {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+    background-color: #f3f4f6;
+
+    cursor: pointer;
+}
+
+.metric-link {
+
+    flex: 1;
+
+    text-decoration: none;
+
+    color: inherit;
 }
 
 .metric-card h3 {
@@ -139,4 +160,35 @@ ul {
     font-size: 14px;
 
     color: #d1d5db;
+}
+
+.node-link {
+
+    text-decoration: none;
+
+    color: #2563eb;
+
+    font-weight: bold;
+}
+
+.node-link:hover {
+
+    text-decoration: underline;
+}
+
+.healthy-message {
+
+    padding: 20px;
+
+    background-color: #ecfdf5;
+
+    border: 1px solid #10b981;
+
+    border-radius: 8px;
+
+    color: #065f46;
+
+    font-weight: bold;
+
+    font-size: 16px;
 }
